@@ -1,15 +1,20 @@
 package org.example.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.EqualsAndHashCode;
+import jakarta.persistence.*;
+import lombok.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Builder
 @Entity
+@Table(name = "tb_user")
 public class User implements Serializable {
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -18,4 +23,10 @@ public class User implements Serializable {
 	private Long id;
 	private String name;
 	private String email;
+
+	@ManyToOne
+	@Setter(AccessLevel.NONE)
+	@JoinColumn(name = "department_id")
+	private Department department;
+	//private final Set<Department> department = new HashSet<>();
 }
